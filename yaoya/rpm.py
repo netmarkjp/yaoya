@@ -53,3 +53,16 @@ class NormalizeFilter(object):
                 line="%s%s"%(separator,result)
                 out.write(line.encode('utf-8'))
             out.write('\n')
+
+from yaoya.command import Main
+class Main(Main):
+
+    def __init(**kw):
+        super.__init__(**kw)
+
+    def run(self):
+        results = self.execute()
+
+        from yaoya.rpm import NormalizeFilter
+        normalize_filter = NormalizeFilter(results)
+        normalize_filter.applicate()
