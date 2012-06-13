@@ -20,10 +20,6 @@ class Main(object):
     def run(self):
         results = self.execute()
 
-#        from yaoya.rpm import NormalizeFilter
-#        normalize_filter = NormalizeFilter(results)
-#        normalize_filter.applicate()
-
         # print
         for result in results:
             try:
@@ -37,6 +33,9 @@ class Main(object):
 
 
     def execute(self):
+        """
+        return list of latest data. specified group_name (and specified command_name)
+        """
         mongos={
             'mongo_host':self.config.get('server','mongo_host'),
             'mongo_port':self.config.get('server','mongo_port'),
