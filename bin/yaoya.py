@@ -25,10 +25,6 @@ if __name__ == '__main__':
         sys.stderr.write(u'ERROR: -g or --group required.')
         sys.stderr.write(u'\n')
         sys.exit(1)
-    if opts.command is None:
-        sys.stderr.write(u'ERROR: -n or --name required.')
-        sys.stderr.write(u'\n')
-        sys.exit(1)
     sys.exit(
         Main(
             opts.config,

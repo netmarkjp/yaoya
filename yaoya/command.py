@@ -12,7 +12,7 @@ class Main(object):
     config = ConfigParser()
     group_name = None
 
-    def __init__(self, config_file, group_name, command_name):
+    def __init__(self, config_file, group_name, command_name=None):
         self.config.read(config_file)
         self.group_name = group_name
         self.command_name = command_name
@@ -20,17 +20,21 @@ class Main(object):
     def run(self):
         results = self.execute()
 
-        from yaoya.rpm import NormalizeFilter
-        normalize_filter = NormalizeFilter(results)
-        normalize_filter.applicate()
+#        from yaoya.rpm import NormalizeFilter
+#        normalize_filter = NormalizeFilter(results)
+#        normalize_filter.applicate()
 
+        # print
+        for result in results:
+            try:
+#                print "%s, %s"%(
+#                    result['host_name'],
+#                    result['output'].rstrip(),
+#                    )
+                print result
+            except:
+                pass
 
-#        # print
-#        for result in results:
-#            print "%s, %s"%(
-#                result['host_name'],
-#                result['output'].rstrip(),
-#                )
 
     def execute(self):
         mongos={
@@ -47,9 +51,10 @@ class Main(object):
 
         base_find_condition = {
             'group_name' : self.group_name,
-            'command_name' : self.command_name,
             'visible' : 'True',
             }
+        if self.command_name is not None:
+            base_find_condition.update({'command_name' : self.command_name,})
 
         # find hosts in group
         condition=deepcopy(base_find_condition)
@@ -61,10 +66,18 @@ class Main(object):
         for host_name in host_names:
             condition=deepcopy(base_find_condition)
             condition.update({'host_name':host_name})
-            documents = collection.find(condition).sort('execute_at',DESCENDING).limit(1)
+            latests = collection.find(condition).sort('execute_at',DESCENDING).limit(1)
+            latest_execute_at=''
+            for latest in latests:
+                latest_execute_at = latest['execute_at']
+                break
+            
+            condition=deepcopy(base_find_condition)
+            condition.update({'host_name':host_name})
+            condition.update({'execute_at':latest_execute_at})
+            documents = collection.find(condition).sort('command_name',ASCENDING)
             for document in documents:
                 results.append(document)
-                break
 
         # finalize
         connection.disconnect()
