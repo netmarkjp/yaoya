@@ -1,0 +1,7 @@
+#!/bin/bash
+
+YAOYA_HOME=$(dirname $0)/../
+
+cd ${YAOYA_HOME}
+bin/csv.py $@
+
