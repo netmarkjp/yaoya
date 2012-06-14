@@ -14,10 +14,10 @@ Install
 
 .. code-block:: bash
 
- pip -r requirements.txt
+ pip install -r requirements.txt
  
  # on MacOSX, if pymongo installation failed, exec following line
- env ARCHFLAGS="-arch i386 -arch x86_64" pip -r requirements.txt
+ env ARCHFLAGS="-arch i386 -arch x86_64" pip install -r requirements.txt
 
 
 Server Configuration
