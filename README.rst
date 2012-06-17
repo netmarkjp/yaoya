@@ -1,5 +1,5 @@
 ========================
-YAOYA data manager
+YAOYA data convertor
 ========================
 
 Requirement
@@ -12,7 +12,7 @@ Requirement
 Install
 ========================
 
-.. code-block:: bash
+shell::
 
  pip install -r requirements.txt
  
@@ -20,19 +20,11 @@ Install
  env ARCHFLAGS="-arch i386 -arch x86_64" pip install -r requirements.txt
 
 
-Server Configuration
-========================
-
-
-
-
-
 Development
 ========================
 
-.. code-block:: bash
+shell::
 
  virtualenv --no-site-packages --python=python2.6 venv
  venv/bin/pip -r requirements.txt
-
 
