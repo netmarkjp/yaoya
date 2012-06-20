@@ -15,6 +15,8 @@ if __name__ == '__main__':
     p.add_option('-c','--config',dest="config",help="configuration file. default is <YAOYA_HOME>/conf/yaoya.cfg")
     p.add_option('-g','--group',dest="group",help="group name")
     p.add_option('-n','--name',dest="command",help="command name")
+    p.add_option('-r','--regexp',dest="regexp",help="regexp pattern")
+    p.add_option('-m','--mode',dest="mode",help="if --mode=excel , line delimiter set to \\r.")
     p.set_defaults(
 	config=parent_dir+'/conf/yaoya.conf',
         group = None,
@@ -29,12 +31,15 @@ if __name__ == '__main__':
         sys.stderr.write(u'ERROR: -n or --command required.')
         sys.stderr.write(u'\n')
         sys.exit(1)
-    sys.exit(
-        Main(
+    m=Main(
             opts.config,
             group_name=opts.group,
             command_name=opts.command,
-            ).run()
+            )
+    m.regexp=opts.regexp
+    m.mode=opts.mode
+    sys.exit(
+        m.run()
         )
 
 # :vim: filetype=python :
